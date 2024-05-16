@@ -3,10 +3,15 @@ import numpy as np
 import pandas as pd
 
 if __name__ == '__main__':
+    # define relevant columns
+    relevant_columns = ['Zeit', 'EventID', 'ComAM_AkkuspannungAkkuelektronik', 'ComGM_BattVolt', 'ComAM_Akkutemperatur',
+                        'ComGM_MotorSpeed', 'ComGM_AbsSollDrehzahl', 'ComGM_Poti_Percent', 'ComGM_Switch_State',
+                        'ComGM_BattCurr', 'ComGM_MotorCurrent', 'ComGM_CompTemp', 'ComGM_MotorTemp',
+                        'ComGD_ulMachineRunTimeSeconds', 'ComGD_ulMotorRunTimeSeconds']
     # loas csv file
     data = pd.read_csv('./data/messfile_000.csv', delimiter=';')
-    # drop columns with '---'
-    drops = [c for c in data.columns.values.tolist() if '---' in c]
+    # drop columns with '---' and non-relevant ones
+    drops = [c for c in data.columns.values.tolist() if '---' in c or c not in relevant_columns]
     data = data.drop(drops, axis=1)
     ### split data to individual sessions
     # determine start and end of each session
